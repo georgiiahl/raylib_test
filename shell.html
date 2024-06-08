@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vertical Pong Game</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+    </style>
+    <script>
+        // Функция для перехода в полноэкранный режим
+        function goFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.log('ERR')
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Переход в полноэкранный режим после загрузки страницы
+            goFullscreen();
+        });
+    </script>
+</head>
+<body>
+    <script>
+        var Module = {
+            onRuntimeInitialized: function() {
+                // Initialize your app or hide the canvas until ready
+                Module._main();
+            },
+            preRun: function() {
+                Module.arguments = ['-f'];
+            },
+            // Убираем стандартное меню Emscripten
+            noInitialRun: true,
+            print: (function() {
+                return function(text) {
+                    console.log(text);
+                };
+            })(),
+            printErr: (function() {
+                return function(text) {
+                    console.error(text);
+                };
+            })()
+        };
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>
